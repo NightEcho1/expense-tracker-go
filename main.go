@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -13,8 +14,29 @@ func main() {
 	fmt.Print("Введите команду: ")
 
 	for scanner.Scan() {
-		line := scanner.Text()
-		fmt.Println("Сканнер прочитал строку: ", line)
+		line := strings.TrimSpace(scanner.Text())
+		line = strings.ToLower(line)
+		switch line {
+		case "add":
+			fmt.Println("Добавить расход: ")
+		case "update":
+			fmt.Println("Обновить запись об расходе: ")
+		case "delete":
+			fmt.Println("Удалить запись об расходе: ")
+		case "viewall":
+			fmt.Println("Посмотреть все расходы: ")
+		case "allsummary":
+			fmt.Println("Посмотреть информацию обо всех расходов: ")
+		case "monthsummary":
+			fmt.Println("Посмотреть информацию обо всех расходов за месяц: ")
+		case "export":
+			fmt.Println("Экспортировать в файл .csv")
+		case "exit", "quit":
+			fmt.Println("выход из программы")
+			return
+		default:
+			fmt.Println("Незивестная команда", line)
+		}
 		fmt.Print("Введите команду: ")
 	}
 
