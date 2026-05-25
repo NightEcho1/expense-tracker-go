@@ -18,19 +18,22 @@ func main() {
 		line = strings.ToLower(line)
 		switch line {
 		case "add":
-			fmt.Println("Добавить расход: ")
+			addExpense(scanner)
 		case "update":
-			fmt.Println("Обновить запись об расходе: ")
+			updateExpense(scanner)
 		case "delete":
-			fmt.Println("Удалить запись об расходе: ")
-		case "viewall":
-			fmt.Println("Посмотреть все расходы: ")
-		case "allsummary":
-			fmt.Println("Посмотреть информацию обо всех расходов: ")
-		case "monthsummary":
-			fmt.Println("Посмотреть информацию обо всех расходов за месяц: ")
+			deleteEpxense(scanner)
+		case "list":
+			listExpenses()
+		case "summary":
+			showMonthSummary(scanner)
+			//TODO
+			// 1. Сделать цикл в котором будет пробег по всем месяцам, что в результате будет давать год
+			// 2. Подумать над тем как сделать вывод (Каждый месяц отдельно, или просто всё сразу)
+		case "summary month", "month":
+			showMonthSummary(scanner)
 		case "export":
-			fmt.Println("Экспортировать в файл .csv")
+			exportCSV()
 		case "exit", "quit":
 			fmt.Println("выход из программы")
 			return
