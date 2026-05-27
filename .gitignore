@@ -1,0 +1,15 @@
+# binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build files
+bin/
+
+# IDE
+.vscode/
+
+# Logs
+*.log
