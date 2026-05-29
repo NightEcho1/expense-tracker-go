@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -36,10 +37,67 @@ func addExpense(scanner *bufio.Scanner) {
 }
 
 func updateExpense(scanner *bufio.Scanner) {
-	// TODO:
-	// 1. Запросить ID
-	// 2. Найти расход
-	// 3. Изменить данные
+	fmt.Print("Напишите ID расходы, который нужно удалить")
+	scanner.Scan()
+	IDinput := scanner.Text()
+
+	ID, errID := strconv.Atoi(IDinput)
+	if errID != nil {
+		fmt.Println("ID должно быть числом")
+		return
+	}
+
+	index := -1
+	for i, exp := range expenses {
+		if ID == exp.ID {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		fmt.Println("Расход с таким ID не найден")
+	}
+
+	fmt.Println("Что необходимо заменить? Описание/Сумма/Дата")
+	scanner.Scan()
+	choice := strings.ToLower(strings.TrimSpace(scanner.Text()))
+
+	switch choice {
+	case "описание":
+		fmt.Print("Введите новое описание: ")
+		scanner.Scan()
+		expenses[index].Description = scanner.Text()
+		fmt.Println("Описание успешно обновлено!")
+
+	case "сумма":
+		fmt.Print("Введите новую сумму: ")
+		scanner.Scan()
+		amountInput := scanner.Text()
+
+		newAmount, err := strconv.ParseFloat(amountInput, 64)
+		if err != nil {
+			fmt.Println("Ошибка: сумма должна быть числом.")
+			return
+		}
+		expenses[index].Amount = newAmount
+		fmt.Println("Сумма успешно обновлена!")
+
+	case "дата":
+		fmt.Print("Введите новую дату (в формате ГГГГ-ММ-ДД): ")
+		scanner.Scan()
+		dateInput := scanner.Text()
+
+		newDate, err := time.Parse("2006-01-02", dateInput)
+		if err != nil {
+			fmt.Println("Ошибка: неверный формат даты. Используйте ГГГГ-ММ-ДД.")
+			return
+		}
+		expenses[index].Date = newDate
+		fmt.Println("Дата успешно обновлена!")
+	default:
+		fmt.Println("Неизвестный параметр. Изменения не внесены.")
+	}
 }
 
 func deleteEpxense(scanner *bufio.Scanner) {
@@ -83,8 +141,8 @@ func showMonthSummary(scanner *bufio.Scanner) {
 	scanner.Scan()
 	monthInput := scanner.Text()
 
-	month, err := strconv.Atoi(monthInput)
-	if err != nil {
+	month, errMonth := strconv.Atoi(monthInput)
+	if errMonth != nil {
 		fmt.Println("Ошибка: введите число от 1 до 12")
 		return
 	}
