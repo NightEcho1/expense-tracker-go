@@ -37,7 +37,7 @@ func addExpense(scanner *bufio.Scanner) {
 }
 
 func updateExpense(scanner *bufio.Scanner) {
-	fmt.Print("Напишите ID расходы, который нужно удалить")
+	fmt.Print("Напишите ID расхода, который нужно изменить")
 	scanner.Scan()
 	IDinput := scanner.Text()
 
@@ -57,6 +57,7 @@ func updateExpense(scanner *bufio.Scanner) {
 
 	if index == -1 {
 		fmt.Println("Расход с таким ID не найден")
+		return
 	}
 
 	fmt.Println("Что необходимо заменить? Описание/Сумма/Дата")
@@ -100,11 +101,35 @@ func updateExpense(scanner *bufio.Scanner) {
 	}
 }
 
-func deleteEpxense(scanner *bufio.Scanner) {
-	// TODO:
-	// 1. Запросить ID
-	// 2. Найти запись
-	// 3. Удалить из slice
+func deleteExpense(scanner *bufio.Scanner) {
+	fmt.Print("Напишите ID расхода, который нужно удалить")
+	scanner.Scan()
+	IDinput := scanner.Text()
+
+	ID, errID := strconv.Atoi(IDinput)
+	if errID != nil {
+		fmt.Println("ID должно быть числом")
+		return
+	}
+
+	index := -1
+	for i, exp := range expenses {
+		if ID == exp.ID {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		fmt.Println("Расход с таким ID не найден")
+		return
+	}
+	expenses = append(
+		expenses[:index],
+		expenses[index+1:]...,
+	)
+
+	fmt.Println("Расход успешно удалён")
 }
 
 func listExpenses() {
