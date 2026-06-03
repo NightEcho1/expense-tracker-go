@@ -1,53 +1,88 @@
+expense-tracker
+Описание / Description
 
-Простое приложение для отслеживания расходов, чтобы управлять своими финансами. Приложение позволяет пользователям добавлять, удалять и просматривать свои расходы. Приложение также позволяет сводку расходов.
-Приложение запускается из командной строки и обладает следующими функциями:
+Русский:
+Expense Tracker — это простое консольное приложение для учёта личных расходов. С его помощью можно:
 
-    Пользователи могут добавить расходы, указав описание и сумму.
+Добавлять расходы с описанием и суммой
+Изменять или удалять записи
+Просматривать все расходы
+Суммировать расходы за месяц или за весь период
+Экспортировать данные в CSV для анализа
 
-    Пользователи могут обновлять информацию о расходах.
+Все данные сохраняются в файле expenses.json, так что при следующем запуске информация не теряется.
 
-    Пользователи могут удалить расходы.
+English:
+Expense Tracker is a simple console application for tracking personal expenses. With it, you can:
 
-    Пользователи могут просмотреть все расходы.
+Add expenses with description and amount
+Update or delete records
+View all expenses
+Summarize expenses by month or overall
+Export data to CSV for further analysis
 
-    Пользователи могут просмотреть сводку всех расходов.
+All data is saved in the expenses.json file, so your information is kept between sessions.
+Установка / Installation
 
-    Пользователи могут просмотреть сводку расходов за конкретный месяц (текущего года).
+Русский:
 
-Дополнительные функции, которые вы можете добавить в приложение:
+Скачайте или клонируйте репозиторий
+В терминале (PowerShell, CMD) перейдите в папку проекта
+Соберите программу:
+go build -o expense-tracker.exe
+Запустите:
+.\expense-tracker.exe
 
-    Добавьте категории расходов и дайте пользователям возможность фильтровать расходы по категориям.
+English:
 
-    Предоставьте пользователям возможность устанавливать бюджет на каждый месяц и отображайте предупреждение, если пользователь превысит бюджет.
+Download or clone the repository
+Open terminal (PowerShell, CMD) in the project folder
+Build the program:
+go build -o expense-tracker.exe
+Run the program:
+.\expense-tracker.exe
+Команды / Commands
 
-    Предоставьте пользователям возможность экспортировать расходы в CSV-файл.
+Русский:
 
-Ниже приведён список команд и ожидаемый результат их выполнения:
-$ expense-tracker add --description "Lunch" --amount 20
-# Expense added successfully (ID: 1)
+Команда	Что делает
+add	Добавить новый расход
+update	Изменить существующий расход по ID
+delete	Удалить расход по ID
+list	Показать все расходы
+summary	Показать общую сумму расходов
+month или summary month	Показать расходы за месяц
+export	Экспортировать данные в CSV
+help	Показать список команд
+exit / quit	Выйти из программы
 
-$ expense-tracker add --description "Dinner" --amount 10
-# Expense added successfully (ID: 2)
+English:
 
-$ expense-tracker list
-# ID  Date       Description  Amount
-# 1   2024-08-06  Lunch        $20
-# 2   2024-08-06  Dinner       $10
+Command	What it does
+add	Add a new expense
+update	Update an existing expense by ID
+delete	Delete an expense by ID
+list	Show all expenses
+summary	Show total expenses
+month or summary month	Show monthly expenses
+export	Export data to CSV
+help	Show the list of commands
+exit / quit	Exit the program
+Формат данных / Data format
 
-$ expense-tracker summary
-# Total expenses: $30
+Все расходы сохраняются в JSON (expenses.json):
 
-$ expense-tracker delete --id 2
-# Expense deleted successfully
+[
+  {
+    "id": 1,
+    "description": "Coffee",
+    "amount": 3.50,
+    "date": "2026-06-03T17:30:00"
+  }
+]
+Экспорт в CSV / Export to CSV
 
-$ expense-tracker summary
-# Total expenses: $20
+При экспорте создаётся CSV файл с такими столбцами:
 
-$ expense-tracker summary --month 8
-# Total expenses for August: $20
-
-
-						
-							
-						
-						
+ID,Description,Amount,Date
+1,Coffee,3.50,2026-06-03

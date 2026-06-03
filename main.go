@@ -8,9 +8,11 @@ import (
 )
 
 func main() {
+	loadExpenses()
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Добро пожаловать в приложение expense-tracker")
 	fmt.Println("Приложение может добавлять, удалять и просматривать расходы пользователя. Приложение также может предоставить сводку расходов.")
+	fmt.Println("Введите help для просмотра списка команд.")
 	fmt.Print("Введите команду: ")
 
 	for scanner.Scan() {
@@ -22,21 +24,20 @@ func main() {
 		case "update":
 			updateExpense(scanner)
 		case "delete":
-			deleteEpxense(scanner)
+			deleteExpense(scanner)
 		case "list":
 			listExpenses()
 		case "summary":
-			showMonthSummary(scanner)
-			//TODO
-			// 1. Сделать цикл в котором будет пробег по всем месяцам, что в результате будет давать год
-			// 2. Подумать над тем как сделать вывод (Каждый месяц отдельно, или просто всё сразу)
+			showSummary()
 		case "summary month", "month":
 			showMonthSummary(scanner)
 		case "export":
-			exportCSV()
+			exportCSV(scanner)
 		case "exit", "quit":
 			fmt.Println("выход из программы")
 			return
+		case "help":
+			showHelp()
 		default:
 			fmt.Println("Незивестная команда", line)
 		}

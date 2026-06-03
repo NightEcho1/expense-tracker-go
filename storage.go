@@ -26,9 +26,37 @@ func saveExpenses() {
 }
 
 func loadExpenses() {
-	//TODO
-	//1. Проверить есть файл
-	//2.1 Если нету файла, выйти из функции (т.к как записей ещё не было)
-	//2.2 Если файл есть, то прочитать его
-	//3 Выгрузить данные
+	fileName := "./expenses.json"
+
+	data, errReadFile := os.ReadFile(fileName)
+	if errReadFile != nil {
+		if os.IsNotExist(errReadFile) {
+			expenses = []Expense{}
+			nextID = 1
+			fmt.Println("Файл expenses.json не найден, при сохранении будет создан новый.")
+			return
+		} else {
+			fmt.Println("Ошибка при попыткe прочесть файл: ", errReadFile)
+			return
+		}
+	}
+
+	errReadFile = json.Unmarshal(data, &expenses)
+	if errReadFile != nil {
+		fmt.Println("Ошибка при разборе JSON:", errReadFile)
+		expenses = []Expense{}
+		nextID = 1
+		return
+	}
+
+	maxID := 0
+	for _, exp := range expenses {
+		if exp.ID > maxID {
+			maxID = exp.ID
+		}
+	}
+
+	nextID = maxID + 1
+
+	fmt.Printf("Загружено %d расходов из файла.\n", len(expenses))
 }
